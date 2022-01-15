@@ -16,6 +16,16 @@ namespace BrainfuckKeyboard.Engine
         {
             this.getInput = getInput;
             this.tokenBuffer = tokenBuffer ?? new List<char>();
+
+            if (tokenBuffer is null)
+                this.tokenBuffer = new List<char>();
+            else
+            {
+                foreach (var token in tokenBuffer)
+                    ValidateToken(token);
+
+                this.tokenBuffer = tokenBuffer;
+            }
         }
 
         public static string Run(IList<char> tokens, Func<char>? getInput = null)
@@ -23,25 +33,25 @@ namespace BrainfuckKeyboard.Engine
             var builder = new StringBuilder();
             var engine = new BrainfuckEngine(getInput, tokens);
 
-            engine.Execute(output => builder.Append(output));
+            engine.ResumeExecution(output => builder.Append(output));
             return builder.ToString();
         }
 
         public void AddToken(char token)
         {
             ValidateToken(token);
-
             tokenBuffer.Add(token);
-            Execute(TriggerOutputEvent);
         }
 
         private void ValidateToken(char token)
         {
-            //if (token is not '+' or '-' or '<' or '>' or '[' or ']' or ',' or '.')
-            //    throw new InvalidOperationException($"'{token}' is not a valid token.");
+            if (token is not ('+' or '-' or '<' or '>' or '[' or ']' or ',' or '.'))
+                throw new InvalidOperationException($"'{token}' is not a valid token.");
         }
 
-        private void Execute(Action<char> handleOutput)
+        public void ResumeExecution() => ResumeExecution(TriggerOutputEvent);
+
+        private void ResumeExecution(Action<char> handleOutput)
         {
             while (tokenIndex < tokenBuffer.Count)
             {
