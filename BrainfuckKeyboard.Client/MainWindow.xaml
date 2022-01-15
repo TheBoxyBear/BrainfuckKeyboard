@@ -1,0 +1,35 @@
+﻿<Window x:Class="BrainfuckKeyboard.Client.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BrainfuckKeyboard.Client"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="452" Width="409">
+    <Window.Resources>
+        <Style TargetType="Button">
+            <Setter Property="FontSize" Value="25"/>
+            <Setter Property="Width" Value="45"/>
+            <Setter Property="Height" Value="45"/>
+            <Setter Property="Margin" Value="5"/>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="80*"/>
+            <RowDefinition Height="20*"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock x:Name="OutputBox" TextWrapping="Wrap" Grid.Row="0" FontSize="25"/>
+
+        <WrapPanel Grid.ColumnSpan="2" Margin="0,347,0,0" Grid.RowSpan="2">
+            <Button Content="+" Click="Button_Click"/>
+            <Button Content="-" Click="Button_Click"/>
+            <Button Content="&lt;" Click="Button_Click"/>
+            <Button Content="&gt;" Click="Button_Click"/>
+            <Button Content="[" Click="Button_Click"/>
+            <Button Content="]" Click="Button_Click"/>
+            <Button Content="." Click="Button_Click"/>
+        </WrapPanel>
+    </Grid>
+</Window>
